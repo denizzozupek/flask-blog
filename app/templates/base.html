@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Deniz Eren Özüpek - Kişisel Blog{% endblock %}</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Roboto:wght@400;500&family=Merriweather:wght@400;500&display=swap" rel="stylesheet">
+    
+    {% block head %}{% endblock %}
+</head>
+<body class="{% block post_class %}post-class{% endblock %}">
+    <!--Navigation-->
+    <nav class="my-navbar">
+        
+        <div class="navbar-title">
+            <a href="{{ url_for('main.index') }}">Deniz Eren Özüpek</a>
+            <span> - Kişisel Blog</span>
+        </div>
+        
+        <button class="menu-toggle">☰</button>
+        
+        <ul class="nav-links">
+            <li class="dropdown">
+                <a href="{{ url_for('main.index') }}">Kategoriler</a>
+                <ul class="dropdown-menu">
+                    {% for cat in all_categories %}
+                        <li><a href="{{ url_for('main.post_by_category', cat_id=cat.id) }}">{{ cat.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </li>
+            <li><a href="{{ url_for('main.about') }}">Hakkımda - İletişim</a></li>
+            <li class="divider"></li>
+        </ul>
+        
+        <div class="search-container">
+            <button id="searchToggle" class="search-button" aria-label="Arama kutusunu aç">
+                <img src="{{ url_for('static', filename='images/search.png') }}" alt="Search Icon">
+                <span class="search-text">Ara</span>
+            </button>
+            <div class="search-box">
+                <form action="{{ url_for('main.search') }}" method="get">
+                     <input type="text" name="q" placeholder="Ara..." aria-label="Search">
+                    <button type="submit" style="display:none;"></button>
+                </form>
+                <button id="closeSearch" class="close-btn">✕</button>
+            </div>
+        </div>
+    </nav>
+
+    <!--maincontent-->
+    <main class="main-content">
+        {% block content %}
+                           
+        {% endblock %}
+    </main>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

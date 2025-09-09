@@ -1,0 +1,21 @@
+body.post-class {
+    background: linear-gradient(to bottom, #2c2c2c 50%, white 50%);
+    color: white;
+    margin: 0;
+}
+
+body.post-class .main-content {
+    background: transparent;
+}
+
+body.post-class h1 {
+    color: white !important;
+}
+
+/*For Mobile*/
+
+body.post-class {
+    background: linear-gradient(to bottom, #2c2c2c 40%, white 0%);
+    color: white;
+    margin: 0;
+}

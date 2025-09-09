@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ post.title }}
+{% endblock %}
+
+{% block post_class %}post-class{% endblock %}
+
+{% block content %}
+    <article class="post">
+        <h3>
+            {% for cat in post.categories %}
+                <a href="{{ url_for('main.post_by_category', cat_id=cat.id) }}">{{ cat.name }}</a>{% if not loop.last %}, {% endif %}
+            {% endfor %}
+        </h3>
+        <h1>{{ post.title }}</h1>
+        <small>&#x1F4C5; {{ post.created_at | format_turkish_date }}</small>
+        <div class="post-content">
+            {{ post.content | process_post_content | safe }}
+        </div>
+    </article>
+
+    
+    <div class="next-before-posts">
+        {% if post.prev_post %}
+            <div class="prev-post">
+            <a href ="{{ url_for('main.show_post', id=post.prev_post.id) }}">⬅{{ post.prev_post.title }}</a>
+            </div>
+        {% endif %}
+
+        <div class="home-button">
+            <a href="{{ url_for('main.index') }}">🏠</a>
+        </div>
+
+        {% if post.next_post %}
+            <div class="next-post">
+                <a href="{{ url_for('main.show_post', id=post.next_post.id) }}"> {{ post.next_post.title }}➡ </a>
+            </div>
+        {% endif %}
+    </div>
+
+
+    
+{% endblock %}

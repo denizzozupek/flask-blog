@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Deniz Eren Özüpek - Kişisel Blog
+{% endblock %}
+
+{% block post_class %}{% endblock %}
+
+{% block content %}
+
+    {% for post in posts.items %}
+        <article class="post">
+            <h3>
+                {% for cat in post.categories %}
+                    <a href="{{ url_for('main.post_by_category', cat_id=cat.id) }}">{{ cat.name }}</a>{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </h3>
+            <h1><a href="{{ url_for('main.show_post', id=post.id) }}">{{ post.title }}</a></h1>
+            <small>&#x1F4C5; {{ post.created_at | format_turkish_date }}</small>
+            <div class="post-content">
+                {% if post.first_image %}
+                    <img src="{{ post.first_image }}" alt="{{ post.title }}">
+                {% endif %}
+                    <p>{{ post.excerpt }}</p>
+                    <a href="{{ url_for('main.show_post', id=post.id) }}" class="btn">DEVAMI ➞</a>
+            </div>
+        </article>
+    {% else %}
+        <p>Hiçbir gönderi bulunamadı.</p>
+    {% endfor %}
+
+    <div class="pagination">
+        {% if posts.has_prev %}
+            <a href="{{ url_for('main.index', page=posts.prev_num) }}">Önceki</a>
+        {% endif %}
+
+        {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+            {% if page_num %}
+               {% if page_num == posts.page %}
+                    <span class="current-page">{{ page_num }}</span>
+                {% else %}
+                    <a href="{{ url_for('main.index', page=page_num) }}">{{ page_num }}</a>
+                {% endif %}
+            {% else %}
+               ...
+            {% endif %}
+        {% endfor %}
+
+        {% if posts.has_next %}
+            <a href="{{ url_for('main.index', page=posts.next_num) }}">Sonraki</a>
+        {% endif %}
+    </div>
+
+
+{% endblock %}

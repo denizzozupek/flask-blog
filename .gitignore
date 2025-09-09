@@ -1,0 +1,21 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Sanal ortam
+myenv/
+
+# Resimler
+app/static/uploads/
+
+# Veritabanı ve instance
+instance/
+var/
+
+# Ortam değişkenleri
+.env
+
+# Yedek dosyalar
+*.csv
+*.sqlite
+*.db

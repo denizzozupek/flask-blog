@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block title %}{{ button_text }}{% endblock %}
+
+{% block content %}
+<h1 class="post-form-title">{{ button_text }}</h1>
+
+<div class="post-form">
+    <form method="POST" action="{% if post %}{{ url_for('admin.edit_post', id=post.id) }}{% else %}{{ url_for('admin.new_post') }}{% endif %}" id="postForm">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="form-group">
+            <label for="title">Başlık:</label>
+            <input type="text" id="title" name="title" value="{{ post.title if post else '' }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="content">İçerik:</label>
+            <textarea id="content" name="content" rows="10" required>{% if post %}{{ post.content|safe }}{% endif %}</textarea>
+        </div>
+
+        
+         <div class="form-group">
+            <label>Kategoriler (maks 3 seçim):</label><br>
+            {% for cat in categories %}
+                <input type="checkbox" name="categories" value="{{ cat.id }}"
+                    {% if post and cat in post.categories %} checked {% endif %}>
+                {{ cat.name }}<br>
+            {% endfor %}
+        </div>
+        <button type="submit" class="submit-btn">{{ button_text }}</button>
+    </form>
+    
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.tiny.cloud/1/ru9f5m2y3q4a109o7hunp4sbe2xtqmm9vi3fla4yfh8lbdgz/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+tinymce.init({
+    selector: '#content',
+    plugins: 'code lists link image media table paste help wordcount imagetools',
+    toolbar: 'undo redo | bold italic underline | alignleft aligncenter alignright | bullist numlist | link image media | table | code | help',
+    height: 400,
+    menubar: false,
+    branding: false,
+    images_upload_url: '/upload_image',
+    automatic_uploads: true,
+
+    // Resim ayarları
+    image_advtab: true,
+    image_title: true,
+    image_description: true,
+    image_dimensions: true,
+    
+    // Resim stil seçenekleri
+    image_class_list: [
+        { title: 'Responsive', value: 'img-responsive' },
+        { title: 'Ortalanmış', value: 'img-centered' },
+        { title: 'Sol hizalı', value: 'img-left' },
+        { title: 'Sağ hizalı', value: 'img-right' },
+        { title: 'Tam genişlik', value: 'img-fullwidth' }
+    ],
+    
+    // Varsayılan resim stilleri
+    content_style: `
+        .img-responsive { max-width: 100%; height: auto; }
+        .img-centered { display: block; margin: 0 auto; max-width: 100%; height: auto; }
+        .img-left { float: left; margin: 0 15px 15px 0; max-width: 50%; height: auto; }
+        .img-right { float: right; margin: 0 0 15px 15px; max-width: 50%; height: auto; }
+        .img-fullwidth { width: 100%; height: auto; }
+        img { max-width: 100%; height: auto; }
+    `,
+    
+    setup: function(editor) {
+        editor.on('change', function() {
+            editor.save();
+        });
+    }
+});
+</script>
+{% endblock %}

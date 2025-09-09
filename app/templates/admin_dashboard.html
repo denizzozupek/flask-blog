@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Paneli{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='admin.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<h1 class="admin-title">Admin Paneli</h1>
+
+<div class="admin-actions">
+    <form action="{{ url_for('admin.new_post') }}" method="GET" style="display: inline;">
+        <button type="submit" class="admin-button">Yeni Yazı Ekle</button>
+    </form>
+</div>
+
+<div class="admin-table">
+    <table>
+        <thead>
+            <tr>
+                <th>Başlık</th>
+                <th>Tarih</th>
+                <th>Önizleme</th>
+                <th>İşlemler</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for post in posts %}
+            <tr>
+                <td>{{ post.title }}</td>
+                <td>{{ post.created_at | format_turkish_date }}</td>
+                <td>{{ post.content | striptags | truncate(80) }}...</td>
+                <td>
+                    <div class="admin-actions-buttons">
+                        <form action="{{ url_for('admin.edit_post', id=post.id) }}" method="GET">
+                            <button type="submit" class="edit-btn">Düzenle</button>
+                        </form>
+                        <form action="{{ url_for('admin.delete_post', id=post.id) }}" method="POST">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <button type="submit" class="delete-btn" onclick="return confirm('Bu gönderiyi silmek istediğine emin misin?')">Sil</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4" class="no-posts">Henüz Gönderi Yok</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
