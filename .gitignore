@@ -11,6 +11,7 @@ app/static/uploads/
 # Veritabanı ve instance
 instance/
 var/
+dump.sql
 
 # Ortam değişkenleri
 .env
