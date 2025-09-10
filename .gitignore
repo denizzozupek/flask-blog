@@ -5,8 +5,6 @@ __pycache__/
 # Sanal ortam
 myenv/
 
-# Resimler
-app/static/uploads/
 
 # Veritabanı ve instance
 instance/
