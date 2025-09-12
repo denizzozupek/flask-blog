@@ -2,14 +2,25 @@ document.addEventListener("DOMContentLoaded", function() {
     const dropdown = document.querySelector(".nav-links .dropdown");
     const dropdownMenu = dropdown.querySelector(".dropdown-menu");
 
-    // Mouse dropdown üzerine gelince aç
+    // Masaüstü için hover davranışı
     dropdown.addEventListener("mouseenter", function() {
-        dropdownMenu.style.display = "block";
+        if (window.innerWidth > 768) { // mobil değilse
+            dropdownMenu.style.display = "block";
+        }
     });
 
-    // Mouse dropdown’tan çıkınca kapat
     dropdown.addEventListener("mouseleave", function() {
-        dropdownMenu.style.display = "none";
+        if (window.innerWidth > 768) {
+            dropdownMenu.style.display = "none";
+        }
+    });
+
+    // Mobil için toggle (click)
+    dropdown.addEventListener("click", function(e) {
+        if (window.innerWidth <= 768) { // sadece mobilde çalışsın
+            e.preventDefault(); // linke gitmeyi engelle
+            dropdownMenu.style.display =
+                dropdownMenu.style.display === "block" ? "none" : "block";
+        }
     });
 });
-
