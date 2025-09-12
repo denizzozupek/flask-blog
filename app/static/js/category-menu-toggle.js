@@ -1,9 +1,9 @@
 document.addEventListener("DOMContentLoaded", function() {
     const dropdown = document.querySelector(".nav-links .dropdown");
+    const dropdownLink = dropdown.querySelector("a");
     const dropdownMenu = dropdown.querySelector(".dropdown-menu");
-    const dropdownLink = dropdown.querySelector("a"); // Kategoriler linki
 
-    // Masaüstü için hover davranışı
+    // Masaüstü hover davranışı
     dropdown.addEventListener("mouseenter", function() {
         if (window.innerWidth > 768) {
             dropdownMenu.style.display = "block";
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    // Mobil için toggle
+    // Mobil toggle
     dropdownLink.addEventListener("click", function(e) {
         if (window.innerWidth <= 768) {
             e.preventDefault(); // linke gitmeyi engelle
