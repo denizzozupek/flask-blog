@@ -15,13 +15,17 @@ document.addEventListener("DOMContentLoaded", function() {
             dropdownMenu.style.display = "none";
         }
     });
-
+    
     // Mobil toggle
     dropdownLink.addEventListener("click", function(e) {
         if (window.innerWidth <= 768) {
-            e.preventDefault(); // linke gitmeyi engelle
-            dropdownMenu.style.display =
-                dropdownMenu.style.display === "block" ? "none" : "block";
+            e.preventDefault(); // ÖNEMLİ: sayfayı yönlendirme
+            // toggle dropdown
+            if (dropdownMenu.style.display === "block") {
+                dropdownMenu.style.display = "none";
+            } else {
+                dropdownMenu.style.display = "block";
+            }
         }
     });
 });
