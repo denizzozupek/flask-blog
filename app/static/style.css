@@ -638,19 +638,15 @@ body{
 }
 
 /* Hover efekti */
-    .nav-links .dropdown:hover > a {
-        background-color: transparent !important;
-    }
+.nav-links .dropdown > a:hover,
+.nav-links .dropdown > a:focus {
+    background-color: transparent !important;
+    outline: none;
+}
 
-    /* Dropdown menüyü JS kontrol etsin */
-    .nav-links .dropdown:hover .dropdown-menu {
-        display: none !important;
-    }
-
-    
-    /* Dropdown menü stilleri */
-    .nav-links .dropdown .dropdown-menu {
-        display: none;
+/* Dropdown menü stilleri */
+.nav-links .dropdown .dropdown-menu {
+    display: none;
         position: static;
         width: 100%;
         background-color: #333;
