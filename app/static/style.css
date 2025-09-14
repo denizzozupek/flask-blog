@@ -620,29 +620,32 @@ body{
 .post li{
     font-size: clamp(1rem, 2.5vw, 1.5rem);
 }
-    .nav-links .dropdown {
-        position: relative;
+.nav-links .dropdown {
+    position: relative;
         cursor: pointer; /* Tüm alan tıklanabilir olduğunu göster */
-        display: block; /* Tam genişlik */
-        width: 100%;
-    }
-    
-    /* Link stilini ayarla */
-    .nav-links .dropdown > a {
-        display: block; /* Tam genişlik */
-        width: 100%;
-        padding: 10px 0; /* Tıklanabilir alanı genişlet */
-        text-decoration: none;
-        color: white;
-        position: relative;
-        box-sizing: border-box;
-    }
-    
-    /* Hover efekti */
-    .nav-links .dropdown:hover > a {
-        background-color: rgba(255, 255, 255, 0.1);
-        border-radius: 3px;
-    }
+    display: block; /* Tam genişlik */
+    width: 100%;
+}  
+/* Link stilini ayarla */
+.nav-links .dropdown > button {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    background: none;      /* butonun default stilini sıfırla */
+    border: none;
+    text-align: left;      /* yazıyı sola yasla */
+    color: white;
+    font: inherit;         /* navbar fontunu miras al */
+    cursor: pointer;
+    position: relative;
+    box-sizing: border-box;
+}
+
+/* Hover efekti */
+.nav-links .dropdown > button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
     
     /* Dropdown menü stilleri */
     .nav-links .dropdown .dropdown-menu {
@@ -683,15 +686,15 @@ body{
         border-bottom: none;
     }
     
-    /* Ok işareti ekle (opsiyonel) */
-    .nav-links .dropdown > a::after {
-        content: "▼";
-        float: right;
-        font-size: 12px;
-        transition: transform 0.3s ease;
-    }
-    
-    .nav-links .dropdown.active > a::after {
-        transform: rotate(180deg);
-    }
+/* Ok işareti ekle */
+.nav-links .dropdown > button::after {
+    content: "▼";
+    float: right;
+    font-size: 12px;
+    transition: transform 0.3s ease;
+}
+
+.nav-links .dropdown.active > button::after {
+    transform: rotate(180deg);
+}
 }
