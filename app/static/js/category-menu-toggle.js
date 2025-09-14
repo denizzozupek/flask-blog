@@ -3,7 +3,8 @@ document.addEventListener("DOMContentLoaded", function() {
     const dropdownLink = dropdown.querySelector("a");
     const dropdownMenu = dropdown.querySelector(".dropdown-menu");
     
-    let isToggling = false; // Toggle işlemini kontrol etmek için flag
+    let isToggling = false;
+    let clickCount = 0; // Tıklama sayacı ekle
 
     // Masaüstü hover davranışı
     dropdown.addEventListener("mouseenter", function() {
@@ -18,33 +19,35 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    // Mobil toggle - daha güvenli yöntem
-    dropdownLink.addEventListener("click", function(e) {
+    // Tüm dropdown area'ya click event ekle (link + boşluk)
+    dropdown.addEventListener("click", function(e) {
         if (window.innerWidth <= 768) {
             e.preventDefault();
-            e.stopPropagation(); // Event bubbling'i durdur
+            e.stopPropagation();
             
-            // Çok hızlı tıklamaları önle
+            // Çok hızlı tıklamaları ve çift tıklamaları önle
             if (isToggling) return;
             
+            clickCount++;
             isToggling = true;
             
+            console.log("Tıklama sayısı:", clickCount); // Debug için
+            
             // Dropdown'un şu anki durumunu kontrol et
-            const isOpen = dropdownMenu.style.display === "block" || 
-                          dropdown.classList.contains("active");
+            const isOpen = dropdown.classList.contains("active");
             
             if (isOpen) {
-                dropdownMenu.style.display = "none";
                 dropdown.classList.remove("active");
+                dropdownMenu.style.display = "none";
             } else {
-                dropdownMenu.style.display = "block";
                 dropdown.classList.add("active");
+                dropdownMenu.style.display = "block";
             }
             
-            // Kısa bir süre sonra toggle flag'ini sıfırla
+            // Toggle flag'ini daha uzun süre tut
             setTimeout(() => {
                 isToggling = false;
-            }, 100);
+            }, 200);
         }
     });
 

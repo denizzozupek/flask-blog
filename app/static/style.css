@@ -620,29 +620,50 @@ body{
 .post li{
     font-size: clamp(1rem, 2.5vw, 1.5rem);
 }
-
-
     .nav-links .dropdown {
         position: relative;
+        cursor: pointer; /* Tüm alan tıklanabilir olduğunu göster */
+        display: block; /* Tam genişlik */
+        width: 100%;
     }
     
+    /* Link stilini ayarla */
+    .nav-links .dropdown > a {
+        display: block; /* Tam genişlik */
+        width: 100%;
+        padding: 10px 0; /* Tıklanabilir alanı genişlet */
+        text-decoration: none;
+        color: white;
+        position: relative;
+        box-sizing: border-box;
+    }
+    
+    /* Hover efekti */
+    .nav-links .dropdown:hover > a {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 3px;
+    }
+    
+    /* Dropdown menü stilleri */
     .nav-links .dropdown .dropdown-menu {
-        display: none; /* Başlangıçta gizli */
+        display: none;
         position: static;
         width: 100%;
         background-color: #333;
-        margin-top: 10px;
+        margin-top: 5px;
         border-radius: 5px;
-        overflow: hidden; /* Border radius için */
+        overflow: hidden;
+        border: 1px solid #444;
     }
     
-    /* Active class ile açılma */
+    /* Active durumda göster */
     .nav-links .dropdown.active .dropdown-menu {
         display: block !important;
     }
     
+    /* Dropdown menü item'ları */
     .nav-links .dropdown .dropdown-menu li {
-        margin: 0; /* Li margin'ını sıfırla */
+        margin: 0;
     }
     
     .nav-links .dropdown .dropdown-menu li a {
@@ -660,5 +681,17 @@ body{
     
     .nav-links .dropdown .dropdown-menu li:last-child a {
         border-bottom: none;
+    }
+    
+    /* Ok işareti ekle (opsiyonel) */
+    .nav-links .dropdown > a::after {
+        content: "▼";
+        float: right;
+        font-size: 12px;
+        transition: transform 0.3s ease;
+    }
+    
+    .nav-links .dropdown.active > a::after {
+        transform: rotate(180deg);
     }
 }
