@@ -373,9 +373,6 @@ body{
     text-decoration: none;
 }
 
-.nav-links .dropdown li a:hover {
-    background-color: #444;
-}
 
 /* pagination */
 .pagination {
