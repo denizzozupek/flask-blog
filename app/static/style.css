@@ -620,10 +620,11 @@ body{
 .post li{
     font-size: clamp(1rem, 2.5vw, 1.5rem);
 }
+
 .nav-links .dropdown {
     position: relative;
-        cursor: pointer; /* Tüm alan tıklanabilir olduğunu göster */
-    display: block; /* Tam genişlik */
+    cursor: pointer;
+    display: block; 
     width: 100%;
 }  
 /* Link stilini ayarla */
@@ -637,12 +638,6 @@ body{
     box-sizing: border-box;
 }
 
-/* Hover efekti */
-.nav-links .dropdown > a:hover,
-.nav-links .dropdown > a:focus {
-    background-color: transparent !important;
-    outline: none;
-}
 
 /* Dropdown menü stilleri */
 .nav-links .dropdown .dropdown-menu {
