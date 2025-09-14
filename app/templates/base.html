@@ -22,7 +22,7 @@
         
         <ul class="nav-links">
             <li class="dropdown">
-                <a href="#" style="pointer-events: none;">Kategoriler</a>
+                <a href="javascript:void(0)">Kategoriler</a>
                 <ul class="dropdown-menu">
                     {% for cat in all_categories %}
                         <li><a href="{{ url_for('main.post_by_category', cat_id=cat.id) }}">{{ cat.name }}</a></li>
