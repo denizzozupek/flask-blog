@@ -638,11 +638,14 @@ body{
 }
 
 /* Hover efekti */
-.nav-links .dropdown:hover > a,
-.nav-links .dropdown:hover .dropdown-menu {
-    background-color: transparent !important;
-    display: none !important;
-}
+    .nav-links .dropdown:hover > a {
+        background-color: transparent !important;
+    }
+
+    /* Dropdown menüyü JS kontrol etsin */
+    .nav-links .dropdown:hover .dropdown-menu {
+        display: none !important;
+    }
 
     
     /* Dropdown menü stilleri */
@@ -691,6 +694,7 @@ body{
     font-size: 12px;
     transition: transform 0.3s ease;
 }
+
 .nav-links .dropdown.active > a::after {
     transform: rotate(180deg);
 }
