@@ -179,7 +179,7 @@ body{
   font-weight: 500;
   color: #333;
   line-height: 1.8;
-  display: inline-block;
+  display: block;
 
 }
 
@@ -202,7 +202,7 @@ body{
 }
 
 .post-content img {
-  width: 100%;         
+  width: auto;         
   max-width: 80%;    
   height: auto;
   display: block; 
