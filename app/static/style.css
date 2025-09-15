@@ -478,6 +478,15 @@ body{
 }
 
 @media screen and (max-width: 768px) {
+
+        .nav-links, .nav-links * {
+        -webkit-tap-highlight-color: transparent !important;
+        -moz-tap-highlight-color: transparent !important;
+        -ms-tap-highlight-color: transparent !important;
+        -webkit-focus-ring-color: transparent !important;
+        outline: none !important;
+    }
+    
     .menu-toggle {
         display: block; 
         order: 3;
@@ -665,8 +674,7 @@ body{
         margin-top: 5px;
         border-radius: 5px;
         overflow: hidden;
-        text-align: center;
-        
+        text-align: center;       
     }
 .nav-links .dropdown-toggle {
     text-align: center;
