@@ -202,7 +202,7 @@ body{
 }
 
 .post-content img {
-  width: 100%;         
+  width: auto;         
   max-width: 80%;    
   height: auto;
   display: block; 
@@ -513,7 +513,7 @@ body{
         flex-direction: column;
         width: 200px;
         padding: 10px;
-        border-radius: 5px;
+        border-radius: 5px; 
     }
 
     .navbar-title {
@@ -654,6 +654,10 @@ body{
     color: white;
     position: relative;
     box-sizing: border-box;
+    background-color: transparent !important;
+}
+.nav-link-about{
+    background-color: transparent !important;
 }
 
 .nav-links li a{
