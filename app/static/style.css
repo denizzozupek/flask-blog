@@ -201,30 +201,11 @@ body{
     text-decoration-thickness: 0.3rem;
 }
 .post-content img {
-  /* Masaüstünde doğal boyutunu koru */
   width: auto !important;
   max-width: 100% !important;
   height: auto !important;
   display: block;
   margin: 1rem auto;
-}
-
-/* TinyMCE sınıflarını da destekle */
-.post-content img.img-responsive,
-.post-content img.img-centered {
-  max-width: 100%;
-  width: auto;
-  height: auto;
-  display: block;
-  margin: 1rem auto;
-}
-
-.post-content img.img-fullwidth {
-  width: auto;
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin: 1rem 0;
 }
 
 .post-content p {
