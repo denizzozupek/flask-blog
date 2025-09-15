@@ -200,11 +200,10 @@ body{
     text-decoration: underline;
     text-decoration-thickness: 0.3rem;
 }
-
 .post-content img {
   /* Masaüstünde doğal boyutunu koru */
   width: auto !important;
-  max-width: none !important;
+  max-width: 100% !important;
   height: auto !important;
   display: block;
   margin: 1rem auto;
@@ -221,7 +220,7 @@ body{
 }
 
 .post-content img.img-fullwidth {
-  width: 100%;
+  width: auto;
   max-width: 100%;
   height: auto;
   display: block;
