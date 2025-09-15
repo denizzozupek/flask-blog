@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     const dropdown = document.querySelector(".nav-links .dropdown");
-    const trigger = dropdown.querySelector("a");
+    const trigger = dropdown.querySelector("dropdown-toggle");
     const menu = dropdown.querySelector(".dropdown-menu");
 
     function toggleMenu(e) {

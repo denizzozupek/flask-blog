@@ -526,7 +526,12 @@ body{
     }
 
     .nav-links li {
-        margin: 10px 0;
+        
+        text-align: center;
+    }
+
+    .nav-link-about {
+        margin-top: -20px;
     }
 
     .divider{
@@ -610,8 +615,10 @@ body{
     margin-top: 0.5rem;
 }
 
-.category-name{
-    font-size: clamp(1.2rem, 2.7vw, 2.2rem);
+.category, .category-name{
+    font-size: clamp(1.6rem, 2.7vw, 2.7rem);
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
 }
 
 .post p{
@@ -630,6 +637,7 @@ body{
 }  
 /* Link stilini ayarla */
 .nav-links .dropdown > a {
+    pointer-events: none;
     display: block;
     width: 100%;
     padding: 10px 0;
@@ -639,24 +647,33 @@ body{
     box-sizing: border-box;
 }
 
+.nav-links li a{
+    display: block;
+    background-color: #333;
+    padding: 10px 0;
+    text-align: center;
+}
+
 
 /* Dropdown menü stilleri */
 .nav-links .dropdown .dropdown-menu {
-        display: block !important;
+        display: block !important; /* Mobilde her zaman göster */
         position: static;
         width: 100%;
-        background-color: #333;
+        background-color: transparent !important;
+        box-shadow: none !important;
         margin-top: 5px;
         border-radius: 5px;
         overflow: hidden;
-        border: 1px solid #444;
+        text-align: center;
+        
     }
+.nav-links .dropdown-toggle {
+    text-align: center;
+    background-color: #333;
+}
     
-    /* Active durumda göster */
-    .nav-links .dropdown.active .dropdown-menu {
-        display: block !important;
-    }
-    
+   
     /* Dropdown menü item'ları */
     .nav-links .dropdown .dropdown-menu li {
         margin: 0;
@@ -664,7 +681,7 @@ body{
     
     .nav-links .dropdown .dropdown-menu li a {
         display: block;
-        padding: 12px 15px;
+        background-color: #333;
         border-bottom: 1px solid #444;
         color: white;
         text-decoration: none;
@@ -678,17 +695,5 @@ body{
     .nav-links .dropdown .dropdown-menu li:last-child a {
         border-bottom: none;
     }
-    
-/* Ok işareti ekle */
-.nav-links .dropdown > a::after {
-    content: "▼";
-    float: right;
-    font-size: 12px;
-    transition: transform 0.3s ease;
-}
-
-.nav-links .dropdown.active > a::after {
-    transform: rotate(180deg);
-}
 
 }
