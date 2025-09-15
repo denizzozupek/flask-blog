@@ -642,7 +642,7 @@ body{
 
 /* Dropdown menü stilleri */
 .nav-links .dropdown .dropdown-menu {
-    display: none;
+        display: block !important;
         position: static;
         width: 100%;
         background-color: #333;
