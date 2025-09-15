@@ -200,11 +200,12 @@ body{
     text-decoration: underline;
     text-decoration-thickness: 0.3rem;
 }
+
 .post-content img {
-  width: auto !important;
-  max-width: 100% !important;
+  width: 100% !important;         
+  max-width: 80% !important;    
   height: auto !important;
-  display: block;
+  display: block; 
   margin: 1rem auto;
 }
 
