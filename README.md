@@ -59,8 +59,6 @@ Personal blog built with **Flask**, featuring posts, categories, an admin panel,
 ## 📂 Project Structure
 
 ```markdown
-## 📂 Project Structure
-
 - flask-blog/
   - app/             # Main application package
     - models.py      # Database models
