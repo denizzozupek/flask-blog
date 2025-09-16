@@ -58,19 +58,21 @@ Personal blog built with **Flask**, featuring posts, categories, an admin panel,
 
 ## 📂 Project Structure
 
+```markdown
+## 📂 Project Structure
 
-flask-blog/
-├── app/             # Main application package
-│   ├── models.py    # Database models
-│   ├── routes/      # Route definitions
-│   ├── templates/   # HTML templates
-│   └── static/      # CSS, JS, Images
-│
-├── config.py        # Config settings
-├── run.py           # App entry point
-├── requirements.txt # Dependencies
-├── .env.example     # Environment variables template
-└── wsgi.py          # WSGI entry point
+- flask-blog/
+  - app/             # Main application package
+    - models.py      # Database models
+    - routes/        # Route definitions
+    - templates/     # HTML templates
+    - static/        # CSS, JS, Images
+  - config.py        # Config settings
+  - run.py           # App entry point
+  - requirements.txt # Dependencies
+  - .env.example     # Environment variables template
+  - wsgi.py          # WSGI entry point
+```
 
 
 ## 📷 Screenshots
@@ -85,5 +87,7 @@ flask-blog/
 📝 License
 
 This project is licensed under the MIT License.
+
+
 
 
