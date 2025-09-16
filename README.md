@@ -34,7 +34,7 @@ Personal blog built with **Flask**, featuring posts, categories, an admin panel,
    cp .env.example .env
    
 5.Run the application:
-  flask run (run.py)
+   flask run (run.py)
 
 ## ⚙️ Configuration
 
