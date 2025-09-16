@@ -1,3 +1,4 @@
+
 # Flask Blog
 
 Personal blog built with **Flask**, featuring posts, categories, an admin panel, backup functionality, image upload, and search.
@@ -19,46 +20,70 @@ Personal blog built with **Flask**, featuring posts, categories, an admin panel,
 
 ## 📦 Installation
 1. Clone the repository:
-   ```bash
+   
    git clone https://github.com/denizzozupek/flask-blog.git
    cd flask-blog
-   
+
+
 2. Create a virtual environment and activate it:
+
+   
    python -m venv venv
    source venv/bin/activate   # On Windows: venv\Scripts\activate
    
+
 3. Install dependencies:
-  pip install -r requirements.txt
+
+   
+   pip install -r requirements.txt
+  
 
 4. Set up environment variables (see .env.example):
+
+  
    cp .env.example .env
+  
+
+5. Run the application:
+
    
-5.Run the application:
-   flask run (run.py)
+   flask run
+   
 
 ## ⚙️ Configuration
 
-DATABASE_URL: PostgreSQL connection string
-
-SECRET_KEY: Flask session key
-
-ADMIN_USERNAME / ADMIN_PASSWORD: Admin panel login credentials
+* **DATABASE\_URL:** PostgreSQL connection string
+* **SECRET\_KEY:** Flask session key
+* **ADMIN\_USERNAME / ADMIN\_PASSWORD:** Admin panel login credentials
 
 ## 📂 Project Structure
 
-   flask-blog/
-   │── app/             # Main application package
-   │   ├── models.py    # Database models
-   │   ├── routes/      # Route definitions
-   │   ├── templates/   # HTML templates
-   │   └── static/      # CSS, JS, Images
-   │
-   │── config.py        # Config settings
-   │── run.py           # App entry point
-   │── requirements.txt # Dependencies
-   │── .env.example     # Environment variables template
-   │── wsgi.py          # WSGI entry point
+
+flask-blog/
+├── app/             # Main application package
+│   ├── models.py    # Database models
+│   ├── routes/      # Route definitions
+│   ├── templates/   # HTML templates
+│   └── static/      # CSS, JS, Images
+│
+├── config.py        # Config settings
+├── run.py           # App entry point
+├── requirements.txt # Dependencies
+├── .env.example     # Environment variables template
+└── wsgi.py          # WSGI entry point
+
+
+## 📷 Screenshots
+
+<p float="left">
+
+  <img width="1903" height="912" alt="Screenshot_1" src="https://github.com/user-attachments/assets/f469e13e-56ad-4790-a91b-230cd250ffaa" />
+  <img width="390" height="623" alt="Screenshot_2" src="https://github.com/user-attachments/assets/58f1b1c9-438e-4237-b06f-ef788a3c346a" />
+
+</p>
 
 📝 License
 
 This project is licensed under the MIT License.
+
+
