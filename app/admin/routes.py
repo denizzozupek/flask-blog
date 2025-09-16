@@ -100,14 +100,19 @@ def upload_image():
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
         filename = f"{int(time.time())}_{filename}"
-        filepath = os.path.join(current_app.config['UPLOAD_FOLDER'], filename)
-        os.makedirs(current_app.config['UPLOAD_FOLDER'], exist_ok=True)
+
+        upload_folder = os.path.join(current_app.root_path, 'static', 'uploads')
+        os.makedirs(upload_folder, exist_ok=True)
+
+        filepath = os.path.join(upload_folder, filename)
         file.save(filepath)
+
 
         if not is_image(filepath):
             os.remove(filepath)
             return {'error': 'Invalid file type'}, 400
-        return {'location': f'/static/uploads/{filename}'}, 200
+        
+        return {'location': url_for('static', filename=f'uploads/{filename}')}, 200
     else:
         return {'error': 'Invalid file extension'}, 400
 
