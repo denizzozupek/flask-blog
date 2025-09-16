@@ -79,6 +79,8 @@ Personal blog built with **Flask**, featuring posts, categories, an admin panel,
 
   <img width="1903" height="912" alt="Screenshot_1" src="https://github.com/user-attachments/assets/f469e13e-56ad-4790-a91b-230cd250ffaa" />
   <img width="390" height="623" alt="Screenshot_2" src="https://github.com/user-attachments/assets/58f1b1c9-438e-4237-b06f-ef788a3c346a" />
+  <img width="1892" height="690" alt="image" src="https://github.com/user-attachments/assets/f80e66ad-4921-45fb-9c62-cfce47bef100" />
+
 
 </p>
 
