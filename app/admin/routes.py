@@ -9,6 +9,8 @@ from app.admin import bp
 from app.models import User, Post, Category
 from app.extensions import db
 from app.utils import fix_image_src, allowed_file, is_image
+from flask import jsonify
+
 
 @bp.route('/login', methods=['GET', 'POST'])
 def admin_login():
@@ -92,35 +94,34 @@ def edit_post(id):
 def upload_image():
     try:
         if 'file' not in request.files:
-            return {'error': 'No file provided'}, 400
+            return jsonify({'error': 'No file provided'}), 400
 
         file = request.files['file']
         if file.filename == '':
-            return {'error': 'No file selected'}, 400
+            return jsonify({'error': 'No file selected'}), 400
 
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            filename = f"{int(time.time())}_{filename}"
+        if not allowed_file(file.filename):
+            return jsonify({'error': 'Invalid file extension'}), 400
 
-            upload_folder = os.path.join(current_app.root_path, 'static', 'uploads')
-            os.makedirs(upload_folder, exist_ok=True)
+        filename = secure_filename(file.filename)
+        filename = f"{int(time.time())}_{filename}"
 
-            filepath = os.path.join(upload_folder, filename)
-            file.save(filepath)
+        upload_folder = os.path.join(current_app.root_path, 'static', 'uploads')
+        os.makedirs(upload_folder, exist_ok=True)
 
-            if not is_image(filepath):
-                os.remove(filepath)
-                return {'error': 'Invalid file type'}, 400
-            
-            return {
-                'location': url_for('static', filename=f'uploads/{filename}')
-            }, 200  
-        else:
-            return {'error': 'Invalid file extension'}, 400
-        
+        filepath = os.path.join(upload_folder, filename)
+        file.save(filepath)
+
+        if not is_image(filepath):
+            os.remove(filepath)
+            return jsonify({'error': 'Invalid file type'}), 400
+
+        file_url = url_for('static', filename=f'uploads/{filename}')
+        return jsonify({'location': file_url}), 200
+
     except Exception as e:
-        current_app.logger.error(f"Upload error: {str(e)}")
-        return {'error': 'Upload failed'}, 500
+        current_app.logger.error(f"Upload error: {str(e)}", exc_info=True)
+        return jsonify({'error': f'Upload failed: {str(e)}'}), 500
 
 @bp.route('/restore_backup', methods=['POST'])
 @login_required

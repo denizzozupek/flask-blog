@@ -13,12 +13,16 @@
         </div>
 
         <div class="form-group">
-            <label for="content">İçerik:</label>
-            <textarea id="content" name="content" rows="10" required>{% if post %}{{ post.content|safe }}{% endif %}</textarea>
+            <label for="editor">İçerik:</label>
+            <div id="editor" style="height: 400px;">
+                {% if post %}
+                    {{ post.content|safe }}
+                {% endif %}
+            </div>
+            <input type="hidden" name="content" id="contentInput">
         </div>
 
-        
-         <div class="form-group">
+        <div class="form-group">
             <label>Kategoriler (maks 3 seçim):</label><br>
             {% for cat in categories %}
                 <input type="checkbox" name="categories" value="{{ cat.id }}"
@@ -26,102 +30,79 @@
                 {{ cat.name }}<br>
             {% endfor %}
         </div>
+
         <button type="submit" class="submit-btn">{{ button_text }}</button>
     </form>
 </div>
-
 {% endblock %}
 
 {% block scripts %}
-<script src="https://cdn.tiny.cloud/1/ru9f5m2y3q4a109o7hunp4sbe2xtqmm9vi3fla4yfh8lbdgz/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-<script>
-tinymce.init({
-    selector: '#content',
-    plugins: 'code lists link image media table paste help wordcount imagetools',
-    toolbar: 'undo redo | bold italic underline | alignleft aligncenter alignright | bullist numlist | link image media | table | code | help',
-    height: 400,
-    menubar: false,
-    branding: false,
-    images_upload_url: '{{ url_for("admin.upload_image") }}',
-    automatic_uploads: true,
+<!-- Quill CSS -->
+<link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+<!-- Quill JS -->
+<script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+<!-- Quill Image Resize Module -->
+<script src="https://cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js"></script>
 
-    // Resim ayarları
-    image_advtab: true,
-    image_title: true,
-    image_description: true,
-    image_dimensions: true,
-    
-    // Resim stil seçenekleri
-    image_class_list: [
-        { title: 'Responsive', value: 'img-responsive' },
-        { title: 'Ortalanmış', value: 'img-centered' },
-        { title: 'Sol hizalı', value: 'img-left' },
-        { title: 'Sağ hizalı', value: 'img-right' },
-        { title: 'Tam genişlik', value: 'img-fullwidth' }
-    ],
-    
-    // Varsayılan resim stilleri
-    content_style: `
-        .img-responsive { max-width: 100%; height: auto; }
-        .img-centered { display: block; margin: 0 auto; max-width: 100%; height: auto; }
-        .img-left { float: left; margin: 0 15px 15px 0; max-width: 50%; height: auto; }
-        .img-right { float: right; margin: 0 0 15px 15px; max-width: 50%; height: auto; }
-        .img-fullwidth { width: 100%; height: auto; }
-        img { max-width: 100%; height: auto; }
-    `,
-    
-    //handler
-    images_upload_handler: function (blobInfo, progress) {
-        return new Promise(function(resolve, reject) {
-            const xhr = new XMLHttpRequest();
-            const formData = new FormData();
-            
-            xhr.withCredentials = false;
-            xhr.open('POST', '{{ url_for("admin.upload_image") }}');
-            
-            xhr.upload.onprogress = function (e) {
-                if (e.lengthComputable) {
-                    progress(e.loaded / e.total * 100);
-                }
-            };
-            
-            xhr.onload = function() {
-                if (xhr.status === 403) {
-                    reject({ message: 'HTTP Error: ' + xhr.status, remove: true });
-                    return;
-                }
-                
-                if (xhr.status < 200 || xhr.status >= 300) {
-                    reject({ message: 'HTTP Error: ' + xhr.status });
-                    return;
-                }
-                
-                try {
-                    const json = JSON.parse(xhr.responseText);
-                    if (!json || typeof json.location !== "string") {
-                        reject({ message: 'Invalid JSON: ' + xhr.responseText });
-                        return;
-                    }
-                    resolve(json.location);
-                } catch (e) {
-                    reject({ message: 'JSON parse error: ' + e.message });
-                }
-            };
-            
-            xhr.onerror = function () {
-                reject({ message: 'Upload failed due to network error' });
-            };
-            
-            formData.append('file', blobInfo.blob(), blobInfo.filename());
-            xhr.send(formData);
-        });
-    },
-    
-    setup: function(editor) {
-        editor.on('change', function() {
-            editor.save();
-        });
+<script>
+const csrfToken = '{{ csrf_token() }}';  // CSRF token değişkeni
+
+// Quill editor 
+var quill = new Quill('#editor', {
+    theme: 'snow',
+    modules: {
+        toolbar: [
+            ['bold', 'italic', 'underline', 'strike'],
+            ['link', 'image', 'video'],
+            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+            [{ 'align': [] }],
+            ['clean']
+        ],
+        imageResize: {}  // Burada resize module aktifleştirildi
     }
+});
+
+// Form submit olunca hidden inputa html koyar
+document.getElementById('postForm').onsubmit = function() {
+    document.getElementById('contentInput').value = quill.root.innerHTML;
+};
+
+// Image upload için handler
+function uploadImage(file) {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return fetch('{{ url_for("admin.upload_image") }}', {
+        method: 'POST',
+        headers: { 'X-CSRFToken': csrfToken },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.location) return result.location;
+        throw new Error('Upload failed');
+    });
+}
+
+// Quill image handler override
+quill.getModule('toolbar').addHandler('image', () => {
+    const input = document.createElement('input');
+    input.setAttribute('type', 'file');
+    input.setAttribute('accept', 'image/*');
+    input.click();
+
+    input.onchange = async () => {
+        const file = input.files[0];
+        if (file) {
+            try {
+                const url = await uploadImage(file);
+                const range = quill.getSelection();
+                quill.insertEmbed(range.index, 'image', url);
+            } catch (err) {
+                alert('Image upload failed: ' + err.message);
+            }
+        }
+    };
 });
 </script>
 {% endblock %}
