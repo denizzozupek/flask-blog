@@ -90,31 +90,37 @@ def edit_post(id):
 @bp.route('/upload_image', methods=['POST'])
 @login_required
 def upload_image():
-    if 'file' not in request.files:
-        return {'error': 'No file provided'}, 400
+    try:
+        if 'file' not in request.files:
+            return {'error': 'No file provided'}, 400
 
-    file = request.files['file']
-    if file.filename == '':
-        return {'error': 'No file selected'}, 400
+        file = request.files['file']
+        if file.filename == '':
+            return {'error': 'No file selected'}, 400
 
-    if file and allowed_file(file.filename):
-        filename = secure_filename(file.filename)
-        filename = f"{int(time.time())}_{filename}"
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            filename = f"{int(time.time())}_{filename}"
 
-        upload_folder = os.path.join(current_app.root_path, 'static', 'uploads')
-        os.makedirs(upload_folder, exist_ok=True)
+            upload_folder = os.path.join(current_app.root_path, 'static', 'uploads')
+            os.makedirs(upload_folder, exist_ok=True)
 
-        filepath = os.path.join(upload_folder, filename)
-        file.save(filepath)
+            filepath = os.path.join(upload_folder, filename)
+            file.save(filepath)
 
-
-        if not is_image(filepath):
-            os.remove(filepath)
-            return {'error': 'Invalid file type'}, 400
+            if not is_image(filepath):
+                os.remove(filepath)
+                return {'error': 'Invalid file type'}, 400
+            
+            return {
+                'location': url_for('static', filename=f'uploads/{filename}')
+            }, 200  
+        else:
+            return {'error': 'Invalid file extension'}, 400
         
-        return {'location': url_for('static', filename=f'uploads/{filename}')}, 200
-    else:
-        return {'error': 'Invalid file extension'}, 400
+    except Exception as e:
+        current_app.logger.error(f"Upload error: {str(e)}")
+        return {'error': 'Upload failed'}, 500
 
 @bp.route('/restore_backup', methods=['POST'])
 @login_required
