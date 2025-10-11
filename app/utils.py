@@ -1,6 +1,7 @@
 import os
 import re
 import html
+from flask import url_for
 from markupsafe import Markup
 from bs4 import BeautifulSoup
 from PIL import Image
@@ -32,8 +33,9 @@ def fix_image_src(content):
     soup = BeautifulSoup(content, 'html.parser')
     for img in soup.find_all('img'):
         src = img.get('src', '')
-        if src and not src.startswith('/'):
-            img['src'] = '/' + src.lstrip('/')
+        if src:
+            filename = src.split('/')[-1]  # sadece dosya adını al
+            img['src'] = url_for('static', filename=f'uploads/{filename}')
     return str(soup)
 
 def allowed_file(filename):
