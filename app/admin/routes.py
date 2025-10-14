@@ -104,12 +104,13 @@ def upload_image():
             return jsonify({'error': 'Invalid file extension'}), 400
 
         filename = secure_filename(file.filename)
-        filename = f"{int(time.time())}_{filename}"
-
         upload_folder = os.path.join(current_app.root_path, 'static', 'uploads')
         os.makedirs(upload_folder, exist_ok=True)
-
         filepath = os.path.join(upload_folder, filename)
+
+        if os.path.exists(filepath):
+            return jsonify({'error': 'Aynı isimde bir dosya zaten var'}), 400
+
         file.save(filepath)
 
         if not is_image(filepath):
