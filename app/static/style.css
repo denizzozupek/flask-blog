@@ -189,6 +189,8 @@ body{
   margin: 0;
   color: #1f2233;
   text-align: center;
+  line-height: 1.2;
+  
 }
 
 .post h1 a {
